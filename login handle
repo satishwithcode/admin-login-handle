@@ -1,0 +1,29 @@
+<?php
+include'connection.php';
+
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+      
+
+        $email=$_POST['signin-email'];
+        $password=$_POST['signin-password'];
+
+
+
+    $query="SELECT * FROM `signin_data` where `signin_email`='$email' and `signin_password`='$password'";
+    $run=mysqli_query($con,$query);
+    $num=mysqli_num_rows($run);
+    if($num==1){
+        $row=mysqli_fetch_assoc($run);
+        if($row['signin_email']==$email && $row['signin_password']==$password){
+            session_start();
+             $_SESSION['email']=$email; 
+            
+            header("location:index.php");
+        }
+    }else{
+        echo("Invaild Login details");
+    }
+    }
+
+
+?>
